@@ -139,6 +139,94 @@ function dia_primero_enero(year) {
 	);
 }
 
+function imprimir_4x3(year){
+    yearCalendar = calendario_del_año(year)
+    console.log("Calendario del año " + year.toString() + " D.C")
+    imprimirFila(0,yearCalendar.slice(0,3))
+    console.log()
+    imprimirFila(1,yearCalendar.slice(3,6))
+	console.log()
+    imprimirFila(2,yearCalendar.slice(6,9))
+    console.log()
+    imprimirFila(3,yearCalendar.slice(9,12))
+}
+
+function imprimirFila(initMonth, monthCalendars){
+    let monthHeader = ["              Enero                          Febrero                          Marzo              ",
+                   "              Abril                            Mayo                           Junio              ",
+                   "              Julio                           Agosto                        Septiembre           ",
+                   "             Octubre                        Noviembre                       Diciembre            "];
+    console.log(monthHeader[initMonth])
+    console.log("|   D   L   K   M   J   V   S   |   D   L   K   M   J   V   S   |   D   L   K   M   J   V   S   |");
+
+ 	let row = "|";
+	let strDay = "";
+	for (let i = 0; i < 6; i++) {
+		for (const month of monthCalendars) {
+			for (const day of month[i]) {
+				if (day == -1) {
+					strDay = " ";
+				} else {
+					strDay = day.toString();
+				}
+				if (strDay.length == 1) {
+					row += "   " + strDay;
+				} else {
+					row += "  " + strDay;
+				}
+			}
+			row += "   |";	
+		}
+		console.log(row);
+		row = "|";
+	}
+}
+
+function calendario_del_año(year){
+    let leapYear = bisiesto(year);
+    let stWeekDay = dia_primero_enero(year);
+    let yearCalendar = []
+    for (let month = 0; month < 12; month++){
+        let monthCalendarInfo = calendario_del_mes(stWeekDay,month,leapYear);
+        yearCalendar.push(monthCalendarInfo[0]); 
+        stWeekDay = monthCalendarInfo[1];
+	}
+    return yearCalendar;
+}
+
+function calendario_del_mes(stWeekDay, month, leapYear){
+    let monthCalendar = [[-1, -1, -1, -1, -1, -1, -1],
+						[-1, -1, -1, -1, -1, -1, -1],
+						[-1, -1, -1, -1, -1, -1, -1],
+						[-1, -1, -1, -1, -1, -1, -1],
+						[-1, -1, -1, -1, -1, -1, -1],
+						[-1, -1, -1, -1, -1, -1, -1]];
+	let monthDays = []
+    if (leapYear == false){
+        monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	}
+	else{
+        monthDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	}
+    let currentWeek = 0
+    for (let day = 1; day < monthDays[month]+1; day++){
+        monthCalendar[currentWeek][stWeekDay] = day;
+        stWeekDay = dia_semana_siguiente(stWeekDay);
+        if (stWeekDay == 0){
+            currentWeek += 1;
+		}
+	}
+    return [monthCalendar, stWeekDay];
+}
+
+function dia_semana_siguiente(weekDay){
+    if (weekDay + 1 == 7){
+        return 0;
+	}
+    return weekDay + 1;
+}
+
+
 console.log('---- Pruebas R0 ----');
 
 // ingresando dato de tipo string
@@ -233,3 +321,15 @@ console.log('2025', dia_primero_enero(2025));
 console.log('1697', dia_primero_enero(1697));
 console.log('1583', dia_primero_enero(1583));
 console.log('2119', dia_primero_enero(2119));
+
+console.log('\n---- Pruebas R5 ----');
+imprimir_4x3(2021)
+console.log("")
+imprimir_4x3(2000)
+console.log("")
+imprimir_4x3(2010)
+console.log("")
+imprimir_4x3(1945)
+console.log("")
+imprimir_4x3(2031)
+console.log("")
