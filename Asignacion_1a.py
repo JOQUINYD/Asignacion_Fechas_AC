@@ -110,6 +110,81 @@ def dia_primero_enero(year):
     # R(1 + 5R(A-1, 4) + 4R(A-1, 100) + 6R(A-1, 400), 7) donde R(x, y) representa "x modulo y"
     return (1 + 5 * ((year-1)%4) + 4 *((year-1)%100) + 6 * ((year-1)%400))%7
 
+
+#E: Un año en el rango permitido
+#S: Ninguna - Solo imprime
+#D: Imprime en consola el calendario de un año en formato de 4 filas de 3 meses cada una
+def imprimir_4x3(year):
+    yearCalendar = calendario_del_año(year)
+    print("Calendario del año " + str(year) + " D.C")
+    imprimirFila(0,yearCalendar[0:3])
+    print()
+    imprimirFila(1,yearCalendar[3:6])
+    print()
+    imprimirFila(2,yearCalendar[6:9])
+    print()
+    imprimirFila(3,yearCalendar[9:12])
+
+def imprimirFila(initMonth, monthCalendars):
+    monthHeader = ["              Enero                          Febrero                          Marzo              ",
+                   "              Abril                            Mayo                           Junio              ",
+                   "              Julio                           Agosto                        Septiembre           ",
+                   "             Octubre                        Noviembre                       Diciembre            "]
+    print(monthHeader[initMonth])
+    print("|   D   L   K   M   J   V   S   |   D   L   K   M   J   V   S   |   D   L   K   M   J   V   S   |")
+
+    row = "|"
+    for i in range(0,6):
+        for month in monthCalendars:
+            for day in month[i]:
+                if day == -1:
+                    strDay = " "
+                else:
+                    strDay = str(day)
+                if len(strDay) == 1:
+                    row += "   " + strDay
+                else:
+                    row += "  " + strDay
+            row += "   |"
+        print(row)
+        row = "|"
+
+def calendario_del_año(year):
+    leapYear = bisiesto(year)
+    stWeekDay = dia_primero_enero(year)
+    yearCalendar = []
+    for month in range(0,12):
+        monthCalendarInfo = calendario_del_mes(stWeekDay,month,leapYear)
+        yearCalendar += [monthCalendarInfo[0]]
+        stWeekDay = monthCalendarInfo[1]
+    return yearCalendar
+
+def calendario_del_mes(stWeekDay, month, leapYear):
+    monthCalendar = [[-1, -1, -1, -1, -1, -1, -1].copy(),
+                     [-1, -1, -1, -1, -1, -1, -1].copy(),
+                     [-1, -1, -1, -1, -1, -1, -1].copy(),
+                     [-1, -1, -1, -1, -1, -1, -1].copy(),
+                     [-1, -1, -1, -1, -1, -1, -1].copy(),
+                     [-1, -1, -1, -1, -1, -1, -1].copy()].copy()
+    if not leapYear:
+        monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    else:
+        monthDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    currentWeek = 0
+    for day in range(1,monthDays[month]+1):
+        monthCalendar[currentWeek][stWeekDay] = day
+        stWeekDay = dia_semana_siguiente(stWeekDay)
+        if stWeekDay == 0:
+            currentWeek += 1
+
+    return (monthCalendar, stWeekDay)
+
+def dia_semana_siguiente(weekDay):
+    if weekDay + 1 == 7:
+        return 0
+    return weekDay + 1
+
 print("---- Pruebas R0 ----")
 
 # ingresando dato de tipo string
@@ -204,3 +279,14 @@ print("1697", dia_primero_enero(1697))
 print("1583", dia_primero_enero(1583))
 print("2119", dia_primero_enero(2119))
 
+print("\n---- Pruebas R5 ----")
+imprimir_4x3(2021)
+print()
+imprimir_4x3(2000)
+print()
+imprimir_4x3(2010)
+print()
+imprimir_4x3(1945)
+print()
+imprimir_4x3(2031)
+print()
