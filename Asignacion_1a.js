@@ -139,6 +139,80 @@ function dia_primero_enero(year) {
 	);
 }
 
+
+//E: Una fecha valida
+//S: Una fecha valida
+//D: Determina la fecha que está N días naturales en el futuro
+function fecha_futura (date, days){
+    //Calcula el dia siguiente N veces 
+	for (let i = 0; i < days; i++) {
+		date = dia_siguiente(date)
+	}
+    return date
+}
+
+//E: Una fecha valida
+//S: Un valor booleano
+//D: Determina si d1 es una fecha mayor que d2
+function fechaMayor(date1,date2){
+	//Se compara el año
+    if (date1[0] > date2[0]){
+        return True
+	}
+    if (date1[0] == date2[0]){
+		//Si el año es igual, se compara el mes 
+        if (date1[1] > date2[1]){
+            return True
+		}
+        if (date1[1] == date2[1]){
+			//Si el mes es igual, se compara el día
+            if (date1[2] > date2[2]){
+				return true
+			}
+		}
+	}
+    return false
+}
+
+//E: Una fecha valida
+//S: Un numero entero
+//D: Calcula la cantidad de días transcurridos desde la fecha 1 hasta la fecha 2, sin importar cual sea mayor
+function dias_entre(date1, date2){
+    //Se determina si la fecha 1 es mayor que la fecha 2 
+    if (fechaMayor(date1, date2)){
+        //Si es mayor se hace el cambio para ordenar las fehcas
+        temp = date1
+        date1 = date2
+        date2 = temp
+	}
+    //Se inicializa la variable res es 0
+    res = 0
+    //En caso de que sean el mismo año
+    if (date1[0] == date2[0]){
+        res = dias_desde_primero_enero(date2) - dias_desde_primero_enero(date1)
+	}
+	//En caso de que sean años diferentes 
+    else{
+        //Se calcula la cantidad de dias de los años completos que hay entre las fechas
+        for (let year = date1[0]+1; year < date2[0]; year++) {
+            if (bisiesto(year))
+                res += 366
+            else
+                res += 365
+		}
+        //Se suman los dias de la fecha 1
+        if (bisiesto(date1[0]))
+            res += 366-dias_desde_primero_enero(date1)
+		else
+            res += 365-dias_desde_primero_enero(date1)
+        //Se suman los dias de la fecha 2
+        res += dias_desde_primero_enero(date2)
+	}
+	return res
+}
+
+
+//Pruebas
 console.log('---- Pruebas R0 ----');
 
 // ingresando dato de tipo string
@@ -233,3 +307,41 @@ console.log('2025', dia_primero_enero(2025));
 console.log('1697', dia_primero_enero(1697));
 console.log('1583', dia_primero_enero(1583));
 console.log('2119', dia_primero_enero(2119));
+
+console.log("\n---- Pruebas R8 ----")
+
+//Caso 0 días 
+console.log(fecha_futura([2019,1,1],0))
+//Caso 15 días mismo año
+console.log(fecha_futura([2019,1,1],15))
+//Caso 15 días diferente año
+console.log(fecha_futura([2019,12,20],15))
+//Caso año bisciesto
+console.log(fecha_futura([2020,2,28],1))
+//Caso año no bisciesto 
+console.log(fecha_futura([2019,2,28],1))
+//Caso 1 año exacto 
+console.log(fecha_futura([2018,1,1],365))
+//Caso 1 año exacto bisciesto 
+console.log(fecha_futura([2020,1,1],366))
+//Caso 2 años exactos 
+console.log(fecha_futura([2018,1,1],730))
+
+console.log("\n---- Pruebas R9 ----")
+
+//Caso 0 dias 
+console.log(dias_entre([2019,1,1],[2019,1,1]))
+//Caso 15 días mismo año
+console.log(dias_entre([2019,1,1],[2019,1,16]))
+//Caso 15 días diferente año
+console.log(dias_entre([2019,12,20],[2020,1,4]))
+//Caso año bisciesto
+console.log(dias_entre([2020,2,28],[2020,2,29]))
+//Caso año no bisciesto 
+console.log(dias_entre([2019,2,28],[2019,3,1]))
+//Caso 1 año exacto 
+console.log(dias_entre([2018,1,1],[2019,1,1]))
+//Caso 1 año exacto bisciesto 
+console.log(dias_entre([2020,1,1],[2021,1,1]))
+//Caso 2 años exactos 
+console.log(dias_entre([2018,1,1],[2020,1,1]))
