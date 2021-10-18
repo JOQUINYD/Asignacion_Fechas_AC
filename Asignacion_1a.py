@@ -110,6 +110,19 @@ def dia_primero_enero(year):
     # R(1 + 5R(A-1, 4) + 4R(A-1, 100) + 6R(A-1, 400), 7) donde R(x, y) representa "x modulo y"
     return (1 + 5 * ((year-1)%4) + 4 *((year-1)%100) + 6 * ((year-1)%400))%7
 
+#E: Una fecha valida
+#S: Una fecha valida
+#D: Determina la fecha que está N días naturales en el futuro
+def fecha_futura (date, days):
+    #Calcula el dia siguiente N veces 
+    for i in range(days):
+        date = dia_siguiente(date)
+    return date
+
+
+
+#Pruebas
+
 print("---- Pruebas R0 ----")
 
 # ingresando dato de tipo string
@@ -203,4 +216,24 @@ print("2025", dia_primero_enero(2025))
 print("1697", dia_primero_enero(1697))
 print("1583", dia_primero_enero(1583))
 print("2119", dia_primero_enero(2119))
+
+print("\n---- Pruebas R8 ----")
+
+#Caso 0 días 
+print(fecha_futura((2019,1,1),0))
+#Caso 15 días mismo año
+print(fecha_futura((2019,1,1),15))
+#Caso 15 días diferente año
+print(fecha_futura((2019,12,20),15))
+#Caso año bisciesto
+print(fecha_futura((2020,2,28),1))
+#Caso año no bisciesto 
+print(fecha_futura((2019,2,28),1))
+#Caso 1 año exacto 
+print(fecha_futura((2018,1,1),365))
+#Caso 1 año exacto bisciesto 
+print(fecha_futura((2020,1,1),365))
+#Caso 2 años exactos 
+print(fecha_futura((2018,1,1),730))
+
 
