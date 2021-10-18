@@ -167,10 +167,17 @@ function dia_semana(date) {
 	}
 	return result;
 }
+
+//E: Un año en el rango permitido
+//S: Ninguna - Solo imprime
+//D: Imprime en consola el calendario de un año en formato de 4 filas de 3 meses cada una
 function imprimir_4x3(year){
+	//Calcula el calendario
     yearCalendar = calendario_del_año(year)
+	//Imprime el header
     console.log("Calendario del año " + year.toString() + " D.C")
-    imprimirFila(0,yearCalendar.slice(0,3))
+	//Imprime 3 meses por cada fila 
+	imprimirFila(0,yearCalendar.slice(0,3))
     console.log()
     imprimirFila(1,yearCalendar.slice(3,6))
 	console.log()
@@ -179,7 +186,11 @@ function imprimir_4x3(year){
     imprimirFila(3,yearCalendar.slice(9,12))
 }
 
+//E: Un numero entero que corresponde al numero del mes con el que incia y el calendario del mes 
+//S: Ninguna - Solo imprime
+//D: Imprime en consola una fila del calendario
 function imprimirFila(initMonth, monthCalendars){
+    //Define los headers del mes 
     let monthHeader = ["              Enero                          Febrero                          Marzo              ",
                    "              Abril                            Mayo                           Junio              ",
                    "              Julio                           Agosto                        Septiembre           ",
@@ -190,7 +201,9 @@ function imprimirFila(initMonth, monthCalendars){
  	let row = "|";
 	let strDay = "";
 	for (let i = 0; i < 6; i++) {
+        //imprime los datos por cada mes 
 		for (const month of monthCalendars) {
+			//imprime cada uno de los días
 			for (const day of month[i]) {
 				if (day == -1) {
 					strDay = " ";
@@ -210,10 +223,14 @@ function imprimirFila(initMonth, monthCalendars){
 	}
 }
 
+//E: Un año en el rango permitido
+//S: Una matriz con el calendario de un año
+//D: Genera una matriz con el calendario de el año dado
 function calendario_del_año(year){
     let leapYear = bisiesto(year);
     let stWeekDay = dia_primero_enero(year);
     let yearCalendar = []
+    //Para cada mes calcula el calendario
     for (let month = 0; month < 12; month++){
         let monthCalendarInfo = calendario_del_mes(stWeekDay,month,leapYear);
         yearCalendar.push(monthCalendarInfo[0]); 
@@ -222,8 +239,13 @@ function calendario_del_año(year){
     return yearCalendar;
 }
 
+//E: Un entero entre 0 y 6 que corresponde al dia de la semana con que inicia el mes, 
+//   el numero de mes y un valor booleano que determina si el año es bisiesto
+//S: Una matriz con el calendario de un año
+//D: Genera una matriz con el calendario de el año dado
 function calendario_del_mes(stWeekDay, month, leapYear){
-    let monthCalendar = [[-1, -1, -1, -1, -1, -1, -1],
+    //Se crea la matriz para cada calendario del mes    
+	let monthCalendar = [[-1, -1, -1, -1, -1, -1, -1],
 						[-1, -1, -1, -1, -1, -1, -1],
 						[-1, -1, -1, -1, -1, -1, -1],
 						[-1, -1, -1, -1, -1, -1, -1],
@@ -237,8 +259,10 @@ function calendario_del_mes(stWeekDay, month, leapYear){
         monthDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	}
     let currentWeek = 0
+	//Calcula el día correspondiente a cada posicion de la matriz
     for (let day = 1; day < monthDays[month]+1; day++){
         monthCalendar[currentWeek][stWeekDay] = day;
+		//Avanza al dia siguiente
         stWeekDay = dia_semana_siguiente(stWeekDay);
         if (stWeekDay == 0){
             currentWeek += 1;
@@ -247,14 +271,16 @@ function calendario_del_mes(stWeekDay, month, leapYear){
     return [monthCalendar, stWeekDay];
 }
 
+//E: Un numero que corresponde al día de la semana del día actual
+//S: Un numero entero
+//D: Determina el siguiente día de la semana
 function dia_semana_siguiente(weekDay){
-    if (weekDay + 1 == 7){
+    //Si es 7 retorna 0
+	if (weekDay + 1 == 7){
         return 0;
 	}
     return weekDay + 1;
 }
-
-
 
 //E: Una fecha valida
 //S: Una fecha valida
@@ -328,10 +354,9 @@ function dias_entre(date1, date2){
 }
 
 
+
 //Pruebas
 console.log('---- Pruebas R0 ----');
-
-console.log("---- Pruebas R0 ----");
 
 //Ingresando dato de tipo string
 console.log(fecha_es_tupla("HOLA"));
@@ -425,6 +450,19 @@ console.log("1697", dia_primero_enero(1697));
 console.log("1583", dia_primero_enero(1583));
 console.log("2119", dia_primero_enero(2119));
 
+console.log('\n---- Pruebas R6 ----');
+
+imprimir_4x3(2021)
+console.log("")
+imprimir_4x3(2000)
+console.log("")
+imprimir_4x3(2010)
+console.log("")
+imprimir_4x3(1945)
+console.log("")
+imprimir_4x3(2031)
+console.log("")
+
 console.log("\n---- Pruebas R7 ----");
 
 //24/7/2020 = viernes
@@ -443,19 +481,6 @@ console.log("19/12/2080", dia_semana([2080, 12, 19]));
 console.log("29/2/2020", dia_semana([2020, 2, 29]));
 //15/8/2010 = domingo
 console.log("15/8/2010", dia_semana([2010, 8, 15]));
-
-console.log('\n---- Pruebas R6 ----');
-
-imprimir_4x3(2021)
-console.log("")
-imprimir_4x3(2000)
-console.log("")
-imprimir_4x3(2010)
-console.log("")
-imprimir_4x3(1945)
-console.log("")
-imprimir_4x3(2031)
-console.log("")
 
 console.log("\n---- Pruebas R8 ----")
 
