@@ -126,7 +126,7 @@ def imprimir_4x3(year):
     imprimirFila(3,yearCalendar[9:12])
 
 #E: Un numero entero que corresponde al numero del mes con el que incia y el calendario del mes 
-#S: Ninguna - Solo imprime
+#S: -
 #D: Imprime en consola una fila del calendario
 def imprimirFila(initMonth, monthCalendars):
     #Define los headers del mes 
@@ -136,7 +136,6 @@ def imprimirFila(initMonth, monthCalendars):
                    "             Octubre                        Noviembre                       Diciembre            "]
     print(monthHeader[initMonth])
     print("|   D   L   K   M   J   V   S   |   D   L   K   M   J   V   S   |   D   L   K   M   J   V   S   |")
-
     row = "|"
     for i in range(0,6):
         #imprime los datos por cada mes 
@@ -170,7 +169,7 @@ def calendario_del_año(year):
     return yearCalendar
 
 #E: Un entero entre 0 y 6 que corresponde al dia de la semana con que inicia el mes, 
-#   el numero de mes y un valor booleano que determina si el año es bisiesto
+##  el numero de mes y un valor booleano que determina si el año es bisiesto
 #S: Una matriz con el calendario de un año
 #D: Genera una matriz con el calendario de el año dado
 def calendario_del_mes(stWeekDay, month, leapYear):
@@ -185,22 +184,20 @@ def calendario_del_mes(stWeekDay, month, leapYear):
         monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     else:
         monthDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
     currentWeek = 0
     #Calcula el día correspondiente a cada posicion de la matriz
     for day in range(1,monthDays[month]+1):
         monthCalendar[currentWeek][stWeekDay] = day
         #Avanza al dia siguiente
-        stWeekDay = dia_semana_siguiente(stWeekDay)
+        stWeekDay = siguiente_dia_semana(stWeekDay)
         if stWeekDay == 0:
             currentWeek += 1
-
     return (monthCalendar, stWeekDay)
 
-# E: Un numero que corresponde al día de la semana del día actual
-# S: Un numero entero
-# D: Determina el siguiente día de la semana
-def dia_semana_siguiente(weekDay):
+#E: Un numero que corresponde al día de la semana del día actual
+#S: Un numero entero
+#D: Determina el siguiente día de la semana
+def siguiente_dia_semana(weekDay):
     #Si es 7 retorna 0
     if weekDay + 1 == 7:
         return 0
