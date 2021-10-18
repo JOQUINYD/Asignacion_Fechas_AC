@@ -104,11 +104,32 @@ def dias_desde_primero_enero(date):
 #S: Un numero entero
 #D: Calcula el dia de la semana al que corresponde el primero de enero de ese año
 def dia_primero_enero(year):
-    # Se retorna el resultado de la siguiente fórmula para calcular 
-    # el dia de la semana del 1ro de enero del añor ingresado
     # Fórmula basada en el algoritmo de Gauss que establece para el 1ro de enero de un año A:
     # R(1 + 5R(A-1, 4) + 4R(A-1, 100) + 6R(A-1, 400), 7) donde R(x, y) representa "x modulo y"
     return (1 + 5 * ((year-1)%4) + 4 *((year-1)%100) + 6 * ((year-1)%400))%7
+
+#E: Una fecha valida
+#S: Un numero entero
+#D: Calcula el dia de la semana al que corresponde la fecha ingresada
+def dia_semana(date):
+    # Se descompone la tupla para poder modificar los valores del mes y año
+    month = date[1]
+    year = date[0]
+    # Si la fecha se ubica en los primeros dos meses del año
+    if month < 3:
+        # Mover el mes de Febrero al final del año previo
+        month += 12
+        year -= 1
+    # Formula basada en el algoritmo de la congruencia de Zeller para el calendario Gregoriano
+    # Por cada año transcurrido el dia de la semana aumenta en 1, y en los bisiestos aumenta 2
+    # Por cada dia transcurrido el dia de la semama aumenta en 1
+    # Por cada 5 meses el dia de la semana aumenta en 13
+    result = ((date[2] + ((13*(month+1))//5) + year + (year//4) - (year//100) + (year//400)) %7)-1
+    # Para compensar la resta de 1 al resultado que cambia el valor 0 de sabado a domingo
+    if result < 0:
+        # Cuando el resultado es -1 debe ser 6
+        result = 6
+    return result
 
 
 #E: Un año en el rango permitido
@@ -249,15 +270,15 @@ def dias_entre(date1, date2):
 
 print("---- Pruebas R0 ----")
 
-# ingresando dato de tipo string
+#Ingresando dato de tipo string
 print(fecha_es_tupla("HOLA"))
-# ingresando dato de tipo array
+#Ingresando dato de tipo array
 print(fecha_es_tupla([1,23,442]))
-# ingresando tupla donde no todos los números son enteros positivos
+#Ingresando tupla donde no todos los números son enteros positivos
 print(fecha_es_tupla((1.23, 32, 323)))
-# ingresando tupla con más de 3 elementos
+#Ingresando tupla con más de 3 elementos
 print(fecha_es_tupla((1.23, 32, 323,323)))
-# ingresando una tupla que cumple con los requerimientos
+#Ingresando una tupla que cumple con los requerimientos
 print(fecha_es_tupla((2021,9,26)))
 
 print("\n---- Pruebas R1 ----")
@@ -328,7 +349,7 @@ print(dias_desde_primero_enero((2020,12,31)))
 
 print("\n---- Pruebas R5 ----")
 
-# Todos los años a ingresar son válidos
+#Todos los años a ingresar son válidos
 print("2006", dia_primero_enero(2006))
 print("3520", dia_primero_enero(3520))
 print("2020", dia_primero_enero(2020))
@@ -341,7 +362,25 @@ print("1697", dia_primero_enero(1697))
 print("1583", dia_primero_enero(1583))
 print("2119", dia_primero_enero(2119))
 
+print("\n---- Pruebas R7 ----")
 print("\n---- Pruebas R6 ----")
+
+#24/7/2020 = viernes
+print("24/7/2020", dia_semana((2020,7,24)))
+#6/2/2018 = martes
+print("6/2/2018", dia_semana((2018,2,6)))
+#16/9/1754 = lunes
+print("16/9/1754", dia_semana((1754,9,16)))
+#20/12/1980 = sabado
+print("20/12/1980", dia_semana((1980,12,20)))
+#31/12/2030 = martes
+print("31/12/2030", dia_semana((2030,12,31)))
+#19/12/2080 = jueves
+print("19/12/2080", dia_semana((2080,12,19)))
+#29/2/2020 = sabado
+print("29/2/2020", dia_semana((2020,2,29)))
+#15/8/2010 = domingo
+print("15/8/2010", dia_semana((2010,8,15)))
 
 imprimir_4x3(2021)
 print()
