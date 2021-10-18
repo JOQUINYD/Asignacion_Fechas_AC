@@ -139,6 +139,22 @@ function dia_primero_enero(year) {
 	);
 }
 
+
+//E: Una fecha valida
+//S: Una fecha valida
+//D: Determina la fecha que está N días naturales en el futuro
+function fecha_futura (date, days){
+    //Calcula el dia siguiente N veces 
+	for (let i = 0; i < days; i++) {
+		date = dia_siguiente(date)
+	}
+    return date
+}
+
+
+
+//Pruebas
+
 console.log('---- Pruebas R0 ----');
 
 // ingresando dato de tipo string
@@ -233,3 +249,22 @@ console.log('2025', dia_primero_enero(2025));
 console.log('1697', dia_primero_enero(1697));
 console.log('1583', dia_primero_enero(1583));
 console.log('2119', dia_primero_enero(2119));
+
+console.log("\n---- Pruebas R8 ----")
+
+//Caso 0 días 
+console.log(fecha_futura([2019,1,1],0))
+//Caso 15 días mismo año
+console.log(fecha_futura([2019,1,1],15))
+//Caso 15 días diferente año
+console.log(fecha_futura([2019,12,20],15))
+//Caso año bisciesto
+console.log(fecha_futura([2020,2,28],1))
+//Caso año no bisciesto 
+console.log(fecha_futura([2019,2,28],1))
+//Caso 1 año exacto 
+console.log(fecha_futura([2018,1,1],365))
+//Caso 1 año exacto bisciesto 
+console.log(fecha_futura([2020,1,1],365))
+//Caso 2 años exactos 
+console.log(fecha_futura([2018,1,1],730))
