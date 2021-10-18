@@ -362,13 +362,13 @@ print(fecha_futura((2019,1,1),0))
 print(fecha_futura((2019,1,1),15))
 #Caso 15 días diferente año
 print(fecha_futura((2019,12,20),15))
-#Caso año bisciesto
+#Caso año bisiesto
 print(fecha_futura((2020,2,28),1))
-#Caso año no bisciesto 
+#Caso año no bisiesto 
 print(fecha_futura((2019,2,28),1))
 #Caso 1 año exacto 
 print(fecha_futura((2018,1,1),365))
-#Caso 1 año exacto bisciesto 
+#Caso 1 año exacto bisiesto 
 print(fecha_futura((2020,1,1),366))
 #Caso 2 años exactos 
 print(fecha_futura((2018,1,1),730))
@@ -381,13 +381,13 @@ print(dias_entre((2019,1,1),(2019,1,1)))
 print(dias_entre((2019,1,1),(2019,1,16)))
 #Caso 15 días diferente año
 print(dias_entre((2019,12,20),(2020,1,4)))
-#Caso año bisciesto
+#Caso año bisiesto
 print(dias_entre((2020,2,28),(2020,2,29)))
-#Caso año no bisciesto 
+#Caso año no bisiesto 
 print(dias_entre((2019,2,28),(2019,3,1)))
 #Caso 1 año exacto 
 print(dias_entre((2018,1,1),(2019,1,1)))
-#Caso 1 año exacto bisciesto 
+#Caso 1 año exacto bisiesto 
 print(dias_entre((2020,1,1),(2021,1,1)))
 #Caso 2 años exactos 
 print(dias_entre((2018,1,1),(2020,1,1)))

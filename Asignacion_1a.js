@@ -417,13 +417,13 @@ console.log(fecha_futura([2019,1,1],0))
 console.log(fecha_futura([2019,1,1],15))
 //Caso 15 días diferente año
 console.log(fecha_futura([2019,12,20],15))
-//Caso año bisciesto
+//Caso año bisiesto
 console.log(fecha_futura([2020,2,28],1))
-//Caso año no bisciesto 
+//Caso año no bisiesto 
 console.log(fecha_futura([2019,2,28],1))
 //Caso 1 año exacto 
 console.log(fecha_futura([2018,1,1],365))
-//Caso 1 año exacto bisciesto 
+//Caso 1 año exacto bisiesto 
 console.log(fecha_futura([2020,1,1],366))
 //Caso 2 años exactos 
 console.log(fecha_futura([2018,1,1],730))
@@ -436,13 +436,13 @@ console.log(dias_entre([2019,1,1],[2019,1,1]))
 console.log(dias_entre([2019,1,1],[2019,1,16]))
 //Caso 15 días diferente año
 console.log(dias_entre([2019,12,20],[2020,1,4]))
-//Caso año bisciesto
+//Caso año bisiesto
 console.log(dias_entre([2020,2,28],[2020,2,29]))
-//Caso año no bisciesto 
+//Caso año no bisiesto 
 console.log(dias_entre([2019,2,28],[2019,3,1]))
 //Caso 1 año exacto 
 console.log(dias_entre([2018,1,1],[2019,1,1]))
-//Caso 1 año exacto bisciesto 
+//Caso 1 año exacto bisiesto 
 console.log(dias_entre([2020,1,1],[2021,1,1]))
 //Caso 2 años exactos 
 console.log(dias_entre([2018,1,1],[2020,1,1]))
