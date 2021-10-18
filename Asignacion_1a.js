@@ -126,8 +126,6 @@ function dias_desde_primero_enero(date) {
 //S: Un numero entero
 //D: Calcula el dia de la semana al que corresponde el primero de enero de ese año
 function dia_primero_enero(year) {
-	// Se retorna el resultado de la siguiente fórmula para calcular
-	// el dia de la semana del 1ro de enero del añor ingresado
 	// Fórmula basada en el algoritmo de Gauss que establece para el 1ro de enero de un año A:
 	// R(1 + 5R(A-1, 4) + 4R(A-1, 100) + 6R(A-1, 400), 7) donde R(x, y) representa "x modulo y"
 	return (
@@ -139,21 +137,51 @@ function dia_primero_enero(year) {
 	);
 }
 
-console.log('---- Pruebas R0 ----');
+//E: Una fecha valida
+//S: Un numero entero
+//D: Calcula el dia de la semana al que corresponde la fecha ingresada
+function dia_semana(date) {
+	// Si la fecha se ubica en los primeros dos meses del año
+	if (date[1] < 3) {
+		// Mover el mes de Febrero al final del año previo
+		date[1] += 12;
+		date[0] -= 1;
+	}
+	// Formula basada en el algoritmo de la congruencia de Zeller para el calendario Gregoriano
+	// Por cada año transcurrido el dia de la semana aumenta en 1, y en los bisiestos aumenta 2
+	// Por cada dia transcurrido el dia de la semama aumenta en 1
+	// Por cada 5 meses el dia de la semana aumenta en 13
+	result =
+		((date[2] +
+			~~((13 * (date[1] + 1)) / 5) +
+			date[0] +
+			~~(date[0] / 4) -
+			~~(date[0] / 100) +
+			~~(date[0] / 400)) %
+			7) -
+		1;
+	// Para compensar la resta de 1 al resultado que cambia el valor 0 de sabado a domingo
+	if (result < 0) {
+		// Cuando el resultado es -1 debe ser 6
+		result = 6;
+	}
+	return result;
+}
 
-// ingresando dato de tipo string
-console.log(fecha_es_tupla('HOLA'));
-// ingresando dato de tipo array (JS maneja tuplas como arrays)
-// en este caso, fecha es tupla debe ser True
+console.log("---- Pruebas R0 ----");
+
+//Ingresando dato de tipo string
+console.log(fecha_es_tupla("HOLA"));
+//Ingresando dato de tipo array (JS maneja tuplas como arrays)
 console.log(fecha_es_tupla([1, 23, 442]));
-// ingresando tupla donde no todos los números son enteros positivos
+//Ingresando tupla donde no todos los números son enteros positivos
 console.log(fecha_es_tupla([1.23, 32, 323]));
-// ingresando tupla con más de 3 elementos
+//Ingresando tupla con más de 3 elementos
 console.log(fecha_es_tupla([1.23, 32, 323, 323]));
-// ingresando una tupla que cumple con los requerimientos
+//Ingresando una tupla que cumple con los requerimientos
 console.log(fecha_es_tupla([2021, 9, 26]));
 
-console.log('\n---- Pruebas R1 ----');
+console.log("\n---- Pruebas R1 ----");
 
 //Año no divisible entre 4
 console.log(bisiesto(2019));
@@ -164,7 +192,7 @@ console.log(bisiesto(2000));
 //Año divisible uniformemente entre 4 y entre 100 y no entre 400
 console.log(bisiesto(1900));
 
-console.log('\n---- Pruebas R2 ----');
+console.log("\n---- Pruebas R2 ----");
 
 //Caso con año menor a la entrada en vigencia
 console.log(fecha_es_valida([1410, 5, 5]));
@@ -191,7 +219,7 @@ console.log(fecha_es_valida([2020, 10, 32]));
 //Caso de cualquier dia diferente a los anteriores
 console.log(fecha_es_valida([2000, 5, 5]));
 
-console.log('\n---- Pruebas R3 ----');
+console.log("\n---- Pruebas R3 ----");
 
 //Cambio de año
 console.log(dia_siguiente([2020, 12, 31]));
@@ -206,7 +234,7 @@ console.log(dia_siguiente([2000, 10, 31]));
 //Cambio de dia en cualquier caso diferente a los anteriores
 console.log(dia_siguiente([2000, 5, 5]));
 
-console.log('\n---- Pruebas R4 ----');
+console.log("\n---- Pruebas R4 ----");
 
 //Pimero de enero a primero de enero
 console.log(dias_desde_primero_enero([2019, 1, 1]));
@@ -219,17 +247,36 @@ console.log(dias_desde_primero_enero([2019, 12, 31]));
 //Hasta el 31 de diciembre en año bisiesto
 console.log(dias_desde_primero_enero([2020, 12, 31]));
 
-console.log('\n---- Pruebas R5 ----');
+console.log("\n---- Pruebas R5 ----");
 
-// Todos los años a ingresar son válidos
-console.log('2006', dia_primero_enero(2006));
-console.log('3520', dia_primero_enero(3520));
-console.log('2020', dia_primero_enero(2020));
-console.log('2021', dia_primero_enero(2021));
-console.log('2022', dia_primero_enero(2022));
-console.log('2023', dia_primero_enero(2023));
-console.log('2024', dia_primero_enero(2024));
-console.log('2025', dia_primero_enero(2025));
-console.log('1697', dia_primero_enero(1697));
-console.log('1583', dia_primero_enero(1583));
-console.log('2119', dia_primero_enero(2119));
+//Todos los años a ingresar son válidos
+console.log("2006", dia_primero_enero(2006));
+console.log("3520", dia_primero_enero(3520));
+console.log("2020", dia_primero_enero(2020));
+console.log("2021", dia_primero_enero(2021));
+console.log("2022", dia_primero_enero(2022));
+console.log("2023", dia_primero_enero(2023));
+console.log("2024", dia_primero_enero(2024));
+console.log("2025", dia_primero_enero(2025));
+console.log("1697", dia_primero_enero(1697));
+console.log("1583", dia_primero_enero(1583));
+console.log("2119", dia_primero_enero(2119));
+
+console.log("\n---- Pruebas R7 ----");
+
+//24/7/2020 = viernes
+console.log("24/7/2020", dia_semana([2020, 7, 24]));
+//6/2/2018 = martes
+console.log("6/2/2018", dia_semana([2018, 2, 6]));
+//16/9/1754 = lunes
+console.log("16/9/1754", dia_semana([1754, 9, 16]));
+//20/12/1980 = sabado
+console.log("20/12/1980", dia_semana([1980, 12, 20]));
+//31/12/2030 = martes
+console.log("31/12/2030", dia_semana([2030, 12, 31]));
+//19/12/2080 = jueves
+console.log("19/12/2080", dia_semana([2080, 12, 19]));
+//29/2/2020 = sabado
+console.log("29/2/2020", dia_semana([2020, 2, 29]));
+//15/8/2010 = domingo
+console.log("15/8/2010", dia_semana([2010, 8, 15]));

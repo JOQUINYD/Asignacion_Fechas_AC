@@ -116,7 +116,7 @@ def dia_semana(date):
     month = date[1]
     year = date[0]
     # Si la fecha se ubica en los primeros dos meses del año
-    if(month < 3):
+    if month < 3:
         # Mover el mes de Febrero al final del año previo
         month += 12
         year -= 1
@@ -126,22 +126,22 @@ def dia_semana(date):
     # Por cada 5 meses el dia de la semana aumenta en 13
     result = ((date[2] + ((13*(month+1))//5) + year + (year//4) - (year//100) + (year//400)) %7)-1
     # Para compensar la resta de 1 al resultado que cambia el valor 0 de sabado a domingo
-    if (result < 0):
+    if result < 0:
         # Cuando el resultado es -1 debe ser 6
         result = 6
     return result
 
 print("---- Pruebas R0 ----")
 
-# ingresando dato de tipo string
+#Ingresando dato de tipo string
 print(fecha_es_tupla("HOLA"))
-# ingresando dato de tipo array
+#Ingresando dato de tipo array
 print(fecha_es_tupla([1,23,442]))
-# ingresando tupla donde no todos los números son enteros positivos
+#Ingresando tupla donde no todos los números son enteros positivos
 print(fecha_es_tupla((1.23, 32, 323)))
-# ingresando tupla con más de 3 elementos
+#Ingresando tupla con más de 3 elementos
 print(fecha_es_tupla((1.23, 32, 323,323)))
-# ingresando una tupla que cumple con los requerimientos
+#Ingresando una tupla que cumple con los requerimientos
 print(fecha_es_tupla((2021,9,26)))
 
 print("\n---- Pruebas R1 ----")
