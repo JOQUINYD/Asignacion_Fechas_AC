@@ -112,8 +112,11 @@ def dia_primero_enero(year):
 #S: -
 #D: Imprime en consola el calendario de un año en formato de 4 filas de 3 meses cada una
 def imprimir_4x3(year):
+    #Calcula el calendario
     yearCalendar = calendario_del_año(year)
+    #Imprime el header
     print("Calendario del año " + str(year) + " D.C")
+    #Imprime 3 meses por cada fila 
     imprimirFila(0,yearCalendar[0:3])
     print()
     imprimirFila(1,yearCalendar[3:6])
@@ -122,7 +125,11 @@ def imprimir_4x3(year):
     print()
     imprimirFila(3,yearCalendar[9:12])
 
+#E: Un numero entero que corresponde al numero del mes con el que incia y el calendario del mes 
+#S: Ninguna - Solo imprime
+#D: Imprime en consola una fila del calendario
 def imprimirFila(initMonth, monthCalendars):
+    #Define los headers del mes 
     monthHeader = ["              Enero                          Febrero                          Marzo              ",
                    "              Abril                            Mayo                           Junio              ",
                    "              Julio                           Agosto                        Septiembre           ",
@@ -132,7 +139,9 @@ def imprimirFila(initMonth, monthCalendars):
 
     row = "|"
     for i in range(0,6):
+        #imprime los datos por cada mes 
         for month in monthCalendars:
+            #imprime cada uno de los días
             for day in month[i]:
                 if day == -1:
                     strDay = " "
@@ -146,17 +155,26 @@ def imprimirFila(initMonth, monthCalendars):
         print(row)
         row = "|"
 
+#E: Un año en el rango permitido
+#S: Una matriz con el calendario de un año
+#D: Genera una matriz con el calendario de el año dado
 def calendario_del_año(year):
     leapYear = bisiesto(year)
     stWeekDay = dia_primero_enero(year)
     yearCalendar = []
+    #Para cada mes calcula el calendario
     for month in range(0,12):
         monthCalendarInfo = calendario_del_mes(stWeekDay,month,leapYear)
         yearCalendar += [monthCalendarInfo[0]]
         stWeekDay = monthCalendarInfo[1]
     return yearCalendar
 
+#E: Un entero entre 0 y 6 que corresponde al dia de la semana con que inicia el mes, 
+#   el numero de mes y un valor booleano que determina si el año es bisiesto
+#S: Una matriz con el calendario de un año
+#D: Genera una matriz con el calendario de el año dado
 def calendario_del_mes(stWeekDay, month, leapYear):
+    #Se crea la matriz para cada calendario del mes
     monthCalendar = [[-1, -1, -1, -1, -1, -1, -1].copy(),
                      [-1, -1, -1, -1, -1, -1, -1].copy(),
                      [-1, -1, -1, -1, -1, -1, -1].copy(),
@@ -169,15 +187,21 @@ def calendario_del_mes(stWeekDay, month, leapYear):
         monthDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
     currentWeek = 0
+    #Calcula el día correspondiente a cada posicion de la matriz
     for day in range(1,monthDays[month]+1):
         monthCalendar[currentWeek][stWeekDay] = day
+        #Avanza al dia siguiente
         stWeekDay = dia_semana_siguiente(stWeekDay)
         if stWeekDay == 0:
             currentWeek += 1
 
     return (monthCalendar, stWeekDay)
 
+# E: Un numero que corresponde al día de la semana del día actual
+# S: Un numero entero
+# D: Determina el siguiente día de la semana
 def dia_semana_siguiente(weekDay):
+    #Si es 7 retorna 0
     if weekDay + 1 == 7:
         return 0
     return weekDay + 1
