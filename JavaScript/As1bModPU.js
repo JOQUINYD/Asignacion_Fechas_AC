@@ -303,12 +303,12 @@ function fecha_futura(date, days) {
 function fecha_mayor(date1, date2) {
 	//Se compara el año
 	if (date1[0] > date2[0]) {
-		return True;
+		return true;
 	}
 	if (date1[0] == date2[0]) {
 		//Si el año es igual, se compara el mes
 		if (date1[1] > date2[1]) {
-			return True;
+			return true;
 		}
 		if (date1[1] == date2[1]) {
 			//Si el mes es igual, se compara el día
@@ -352,6 +352,10 @@ function dias_entre(date1, date2) {
 	}
 	return res;
 }
+
+module.exports = {
+	dias_entre
+};
 
 /*
 //Pruebas
