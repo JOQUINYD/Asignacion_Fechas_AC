@@ -338,18 +338,24 @@ print(fecha_es_valida((2000,5,5)))
 
 print("\n---- Pruebas R3 ----")
 
-#Cambio de año
-print(dia_siguiente((2020,12,31)))
-#Cambio de mes en Feb de un año bisiesto
-print(dia_siguiente((2020,2,29)))
+#Cambio de dia en Feb
+print(dia_siguiente((2019,2,5)))
+#Cambio de dia en Feb bisiesto
+print(dia_siguiente((2020,2,28)))
 #Cambio de mes en Feb de un año no bisiesto
-print(dia_siguiente((2019,2,28)))
-#Cambio de mes en un mes de 31 dias
-print(dia_siguiente((2000,9,30)))
+print(dia_siguiente((2017,2,28)))
+#Cambio de mes en Feb de un año bisiesto
+print(dia_siguiente((2024,2,29)))
+#Cambio de dia en un mes de 30 dias
+print(dia_siguiente((1980,6,28)))
 #Cambio de mes en un mes de 30 dias
-print(dia_siguiente((2000,10,31)))
-#Cambio de dia en cualquier caso diferente a los anteriores
-print(dia_siguiente((2000,5,5)))
+print(dia_siguiente((1870,4,30)))
+#Cambio de dia en un mes de 31 dias
+print(dia_siguiente((2035,1,1)))
+#Cambio de mes en un mes de 31 dias
+print(dia_siguiente((2082,8,31)))
+#Cambio de año
+print(dia_siguiente((1728,12,31)))
 
 print("\n---- Pruebas R4 ----")
 
@@ -448,3 +454,4 @@ print(dias_entre((2018,1,1),(2019,1,1)))
 print(dias_entre((2020,1,1),(2021,1,1)))
 #Caso 2 años exactos 
 print(dias_entre((2018,1,1),(2020,1,1)))
+
